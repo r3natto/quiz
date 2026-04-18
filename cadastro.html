@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuizBase — Cadastro</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e11;
+    --surface: #18181d;
+    --surface2: #222229;
+    --border: #2e2e38;
+    --accent: #7c6ef7;
+    --accent2: #a78bfa;
+    --text: #f0f0f5;
+    --muted: #8888a0;
+    --success: #34d399;
+    --danger: #f87171;
+    --warning: #fbbf24;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+
+  /* NAV */
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 2rem; border-bottom: 1px solid var(--border); }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; }
+  .logo span { color: var(--accent2); }
+  .nav-links { display: flex; gap: 8px; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.875rem; padding: 6px 14px; border-radius: 8px; transition: all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { background: var(--surface2); color: var(--text); }
+  .nav-links a.active { color: var(--accent2); }
+
+  /* LAYOUT */
+  .container { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+  h1 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+
+  /* FORM CARD */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; margin-bottom: 1.5rem; }
+  .card-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 1.2rem; color: var(--accent2); display: flex; align-items: center; gap: 8px; }
+  .card-title::before { content: ''; display: inline-block; width: 3px; height: 1em; background: var(--accent2); border-radius: 2px; }
+
+  label { display: block; font-size: 0.8rem; font-weight: 500; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  input[type=text], textarea, select {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; padding: 10px 14px; outline: none; transition: border-color 0.2s;
+  }
+  input[type=text]:focus, textarea:focus, select:focus { border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+  select option { background: var(--surface2); }
+
+  .field { margin-bottom: 1.2rem; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  /* TIPO DE QUESTÃO */
+  .tipo-tabs { display: flex; gap: 8px; margin-bottom: 1.2rem; }
+  .tipo-tab { flex: 1; padding: 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--muted); font-size: 0.875rem; cursor: pointer; text-align: center; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .tipo-tab.active { border-color: var(--accent); color: var(--accent2); background: rgba(124,110,247,0.1); }
+
+  /* ALTERNATIVAS */
+  .alternativa { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .alt-label { width: 28px; height: 28px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; color: var(--muted); flex-shrink: 0; }
+  .alt-label.correta { background: rgba(52,211,153,0.15); border-color: var(--success); color: var(--success); }
+  .alternativa input[type=text] { flex: 1; }
+  .alt-check { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+
+  /* GABARITO CERTO/ERRADO */
+  .ce-group { display: flex; gap: 12px; }
+  .ce-btn { flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--muted); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; transition: all 0.2s; }
+  .ce-btn.selected-certo { border-color: var(--success); color: var(--success); background: rgba(52,211,153,0.1); }
+  .ce-btn.selected-errado { border-color: var(--danger); color: var(--danger); background: rgba(248,113,113,0.1); }
+
+  /* BUTTONS */
+  .btn-primary { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 11px 24px; font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; margin-top: 0.5rem; }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* LISTA DE QUESTÕES */
+  .questao-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.2rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; transition: border-color 0.2s; }
+  .questao-item:hover { border-color: var(--border); }
+  .q-info { flex: 1; }
+  .q-enunciado { font-size: 0.9rem; line-height: 1.4; margin-bottom: 6px; }
+  .q-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { display: inline-block; font-size: 0.72rem; padding: 2px 10px; border-radius: 20px; font-weight: 500; }
+  .tag-materia { background: rgba(124,110,247,0.15); color: var(--accent2); border: 1px solid rgba(124,110,247,0.3); }
+  .tag-tipo { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+  .q-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .btn-icon { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; color: var(--muted); font-size: 0.8rem; }
+  .btn-icon:hover.del { border-color: var(--danger); color: var(--danger); background: rgba(248,113,113,0.1); }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; font-size: 0.875rem; transform: translateY(100px); opacity: 0; transition: all 0.3s; z-index: 999; max-width: 300px; }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { border-color: var(--success); color: var(--success); }
+  .toast.error { border-color: var(--danger); color: var(--danger); }
+
+  /* EMPTY */
+  .empty { text-align: center; padding: 3rem; color: var(--muted); }
+  .empty-icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.4; }
+
+  /* SEARCH / FILTER */
+  .filter-bar { display: flex; gap: 10px; margin-bottom: 1.2rem; }
+  .filter-bar input { flex: 1; }
+  .filter-bar select { width: 160px; }
+
+  /* CONFIG AVISO */
+  .aviso { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.875rem; color: var(--warning); display: none; }
+  .aviso a { color: var(--warning); }
+
+  /* LOADER */
+  .loader { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.875rem; }
+
+  @media(max-width: 600px) {
+    .row2 { grid-template-columns: 1fr; }
+    nav { padding: 1rem; }
+    .nav-links a span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Quiz<span>Base</span></div>
+  <div class="nav-links">
+    <a href="cadastro.html" class="active">✏️ <span>Cadastro</span></a>
+    <a href="quiz.html">🎯 <span>Quiz</span></a>
+    <a href="historico.html">📊 <span>Histórico</span></a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Cadastro de Questões</h1>
+  <p class="subtitle">Adicione e gerencie suas questões de estudo</p>
+
+  <div class="aviso" id="aviso-config">
+    ⚠️ Configure o Firebase antes de usar. <a href="#" onclick="mostrarConfig()">Clique aqui para configurar</a>.
+  </div>
+
+  <!-- FORM -->
+  <div class="card">
+    <div class="card-title">Nova questão</div>
+
+    <div class="tipo-tabs">
+      <button class="tipo-tab active" onclick="setTipo('multipla')">Múltipla escolha</button>
+      <button class="tipo-tab" onclick="setTipo('certo_errado')">Certo ou Errado</button>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label>Matéria</label>
+        <input type="text" id="materia" placeholder="Ex: Direito Constitucional" list="materias-list">
+        <datalist id="materias-list"></datalist>
+      </div>
+      <div class="field">
+        <label>Banca / Fonte (opcional)</label>
+        <input type="text" id="banca" placeholder="Ex: CESPE 2023">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Enunciado</label>
+      <textarea id="enunciado" placeholder="Digite o enunciado da questão..."></textarea>
+    </div>
+
+    <!-- MÚLTIPLA ESCOLHA -->
+    <div id="bloco-multipla">
+      <label style="margin-bottom:10px">Alternativas <span style="color:var(--muted);font-size:0.75rem;text-transform:none;letter-spacing:0">(marque a correta)</span></label>
+      <div id="alternativas"></div>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <button class="btn-icon" onclick="addAlternativa()" title="Adicionar alternativa" style="width:auto;padding:0 12px;height:32px;font-size:0.8rem;color:var(--accent2);border-color:var(--accent)">+ alternativa</button>
+        <button class="btn-icon del" onclick="removeAlternativa()" title="Remover última" style="width:auto;padding:0 12px;height:32px;font-size:0.8rem">− remover</button>
+      </div>
+    </div>
+
+    <!-- CERTO/ERRADO -->
+    <div id="bloco-ce" style="display:none">
+      <label style="margin-bottom:10px">Gabarito</label>
+      <div class="ce-group">
+        <button class="ce-btn" id="btn-certo" onclick="setCE('Certo')">✓ Certo</button>
+        <button class="ce-btn" id="btn-errado" onclick="setCE('Errado')">✗ Errado</button>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="btn-salvar" onclick="salvarQuestao()">Salvar questão</button>
+  </div>
+
+  <!-- LISTA -->
+  <div class="card">
+    <div class="card-title">Questões cadastradas</div>
+    <div class="filter-bar">
+      <input type="text" id="busca" placeholder="Buscar..." oninput="filtrar()">
+      <select id="filtro-materia" onchange="filtrar()">
+        <option value="">Todas as matérias</option>
+      </select>
+    </div>
+    <div id="lista-questoes"><div class="loader">Carregando...</div></div>
+  </div>
+</div>
+
+<!-- MODAL CONFIG -->
+<div id="modal-config" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;display:flex;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;max-width:520px;width:90%;max-height:90vh;overflow-y:auto;">
+    <h2 style="font-family:'Syne',sans-serif;margin-bottom:0.5rem">Configurar Firebase</h2>
+    <p style="color:var(--muted);font-size:0.875rem;margin-bottom:1.5rem">Cole as configurações do seu projeto Firebase abaixo. <a href="https://console.firebase.google.com" target="_blank" style="color:var(--accent2)">Criar projeto gratuito →</a></p>
+    <div class="field"><label>API Key</label><input type="text" id="cfg-apiKey" placeholder="AIza..."></div>
+    <div class="field"><label>Auth Domain</label><input type="text" id="cfg-authDomain" placeholder="seu-projeto.firebaseapp.com"></div>
+    <div class="field"><label>Project ID</label><input type="text" id="cfg-projectId" placeholder="seu-projeto"></div>
+    <div class="field"><label>Storage Bucket</label><input type="text" id="cfg-storageBucket" placeholder="seu-projeto.appspot.com"></div>
+    <div class="field"><label>Messaging Sender ID</label><input type="text" id="cfg-messagingSenderId" placeholder="123456789"></div>
+    <div class="field"><label>App ID</label><input type="text" id="cfg-appId" placeholder="1:123:web:abc"></div>
+    <div style="display:flex;gap:10px;margin-top:1rem">
+      <button class="btn-primary" style="margin-top:0" onclick="salvarConfig()">Salvar e conectar</button>
+      <button onclick="fecharConfig()" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+let db = null;
+let questoes = [];
+let tipoAtual = 'multipla';
+let gabCE = null;
+let numAlts = 5;
+const letras = ['A','B','C','D','E'];
+
+function getConfig() {
+  const c = localStorage.getItem('qb_config');
+  return c ? JSON.parse(c) : null;
+}
+
+async function initFirebase() {
+  const cfg = getConfig();
+  if (!cfg) { document.getElementById('aviso-config').style.display='block'; return false; }
+  try {
+    const app = initializeApp(cfg);
+    db = getFirestore(app);
+    return true;
+  } catch(e) { toast('Erro ao conectar Firebase', 'error'); return false; }
+}
+
+// TIPO
+window.setTipo = function(t) {
+  tipoAtual = t;
+  document.querySelectorAll('.tipo-tab').forEach((b,i) => b.classList.toggle('active', (i===0&&t==='multipla')||(i===1&&t==='certo_errado')));
+  document.getElementById('bloco-multipla').style.display = t==='multipla'?'block':'none';
+  document.getElementById('bloco-ce').style.display = t==='certo_errado'?'block':'none';
+}
+
+// ALTERNATIVAS
+function renderAlts() {
+  const c = document.getElementById('alternativas');
+  c.innerHTML = '';
+  for(let i=0;i<numAlts;i++) {
+    const d = document.createElement('div');
+    d.className='alternativa';
+    d.innerHTML=`<div class="alt-label" id="lbl-${i}">${letras[i]}</div>
+      <input type="text" id="alt-${i}" placeholder="Alternativa ${letras[i]}">
+      <input type="radio" name="gabarito" class="alt-check" value="${i}" onchange="updateLabels()">`;
+    c.appendChild(d);
+  }
+}
+window.updateLabels = function() {
+  const sel = document.querySelector('input[name=gabarito]:checked');
+  for(let i=0;i<numAlts;i++) {
+    const l = document.getElementById(`lbl-${i}`);
+    l.className='alt-label'+(sel&&parseInt(sel.value)===i?' correta':'');
+  }
+}
+window.addAlternativa = function() { if(numAlts<5){numAlts++;renderAlts();} }
+window.removeAlternativa = function() { if(numAlts>2){numAlts--;renderAlts();} }
+
+window.setCE = function(v) {
+  gabCE=v;
+  document.getElementById('btn-certo').className='ce-btn'+(v==='Certo'?' selected-certo':'');
+  document.getElementById('btn-errado').className='ce-btn'+(v==='Errado'?' selected-errado':'');
+}
+
+// SALVAR
+window.salvarQuestao = async function() {
+  if(!db){ toast('Configure o Firebase primeiro','error'); mostrarConfig(); return; }
+  const enunciado = document.getElementById('enunciado').value.trim();
+  const materia = document.getElementById('materia').value.trim();
+  if(!enunciado){ toast('Digite o enunciado','error'); return; }
+  if(!materia){ toast('Digite a matéria','error'); return; }
+
+  let dados = { enunciado, materia, banca: document.getElementById('banca').value.trim(), tipo: tipoAtual, criadoEm: Date.now() };
+
+  if(tipoAtual==='multipla') {
+    const alts = [];
+    for(let i=0;i<numAlts;i++) {
+      const v=document.getElementById(`alt-${i}`).value.trim();
+      if(!v){ toast(`Preencha a alternativa ${letras[i]}`,'error'); return; }
+      alts.push(v);
+    }
+    const sel = document.querySelector('input[name=gabarito]:checked');
+    if(!sel){ toast('Marque o gabarito correto','error'); return; }
+    dados.alternativas = alts;
+    dados.gabarito = parseInt(sel.value);
+  } else {
+    if(!gabCE){ toast('Selecione Certo ou Errado','error'); return; }
+    dados.alternativas = ['Certo','Errado'];
+    dados.gabarito = gabCE==='Certo'?0:1;
+  }
+
+  document.getElementById('btn-salvar').disabled=true;
+  try {
+    await addDoc(collection(db,'questoes'), dados);
+    toast('Questão salva!','success');
+    limparForm();
+    await carregarQuestoes();
+  } catch(e){ toast('Erro ao salvar: '+e.message,'error'); }
+  document.getElementById('btn-salvar').disabled=false;
+}
+
+function limparForm() {
+  document.getElementById('enunciado').value='';
+  document.getElementById('banca').value='';
+  renderAlts(); gabCE=null;
+  document.getElementById('btn-certo').className='ce-btn';
+  document.getElementById('btn-errado').className='ce-btn';
+}
+
+// CARREGAR
+async function carregarQuestoes() {
+  if(!db) return;
+  try {
+    const q = query(collection(db,'questoes'), orderBy('criadoEm','desc'));
+    const snap = await getDocs(q);
+    questoes = snap.docs.map(d=>({id:d.id,...d.data()}));
+    atualizarFiltroMateria();
+    renderLista(questoes);
+  } catch(e){ document.getElementById('lista-questoes').innerHTML='<div class="loader">Erro ao carregar</div>'; }
+}
+
+function atualizarFiltroMateria() {
+  const sel = document.getElementById('filtro-materia');
+  const atual = sel.value;
+  const materias = [...new Set(questoes.map(q=>q.materia))].sort();
+  sel.innerHTML='<option value="">Todas as matérias</option>';
+  materias.forEach(m=>{ const o=document.createElement('option'); o.value=m; o.textContent=m; sel.appendChild(o); });
+  sel.value=atual;
+  // datalist
+  const dl = document.getElementById('materias-list');
+  dl.innerHTML='';
+  materias.forEach(m=>{ const o=document.createElement('option'); o.value=m; dl.appendChild(o); });
+}
+
+window.filtrar = function() {
+  const busca = document.getElementById('busca').value.toLowerCase();
+  const mat = document.getElementById('filtro-materia').value;
+  const filtrado = questoes.filter(q=>
+    (!mat||q.materia===mat)&&
+    (!busca||q.enunciado.toLowerCase().includes(busca)||q.materia.toLowerCase().includes(busca))
+  );
+  renderLista(filtrado);
+}
+
+function renderLista(list) {
+  const c = document.getElementById('lista-questoes');
+  if(!list.length){ c.innerHTML=`<div class="empty"><div class="empty-icon">📭</div><div>Nenhuma questão encontrada</div></div>`; return; }
+  c.innerHTML=list.map(q=>`
+    <div class="questao-item">
+      <div class="q-info">
+        <div class="q-enunciado">${q.enunciado.length>120?q.enunciado.slice(0,120)+'...':q.enunciado}</div>
+        <div class="q-meta">
+          <span class="tag tag-materia">${q.materia}</span>
+          <span class="tag tag-tipo">${q.tipo==='certo_errado'?'C/E':'${q.alternativas?.length} alt.'}</span>
+          ${q.banca?`<span class="tag tag-tipo">${q.banca}</span>`:''}
+        </div>
+      </div>
+      <div class="q-actions">
+        <button class="btn-icon del" onclick="deletarQuestao('${q.id}')" title="Excluir">🗑</button>
+      </div>
+    </div>
+  `).join('');
+  // corrigir bug template literal aninhado
+  c.querySelectorAll('.tag-tipo').forEach(el=>{
+    if(el.textContent.includes('${')) {
+      const q2=list.find(q=>el.closest('.questao-item'));
+    }
+  });
+}
+
+window.deletarQuestao = async function(id) {
+  if(!confirm('Excluir esta questão?')) return;
+  try {
+    await deleteDoc(doc(db,'questoes',id));
+    toast('Questão excluída','success');
+    await carregarQuestoes();
+  } catch(e){ toast('Erro ao excluir','error'); }
+}
+
+// CONFIG
+window.mostrarConfig = function() {
+  const cfg=getConfig()||{};
+  ['apiKey','authDomain','projectId','storageBucket','messagingSenderId','appId'].forEach(k=>{
+    const el=document.getElementById('cfg-'+k); if(el&&cfg[k]) el.value=cfg[k];
+  });
+  document.getElementById('modal-config').style.display='flex';
+}
+window.fecharConfig = function() { document.getElementById('modal-config').style.display='none'; }
+window.salvarConfig = async function() {
+  const cfg={};
+  ['apiKey','authDomain','projectId','storageBucket','messagingSenderId','appId'].forEach(k=>{
+    cfg[k]=document.getElementById('cfg-'+k).value.trim();
+  });
+  if(!cfg.apiKey||!cfg.projectId){ toast('Preencha pelo menos API Key e Project ID','error'); return; }
+  localStorage.setItem('qb_config',JSON.stringify(cfg));
+  fecharConfig();
+  const ok = await initFirebase();
+  if(ok){ document.getElementById('aviso-config').style.display='none'; toast('Firebase conectado!','success'); await carregarQuestoes(); }
+}
+
+// TOAST
+function toast(msg,type='success') {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast '+type+' show';
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// INIT
+renderAlts();
+initFirebase().then(ok=>{ if(ok) carregarQuestoes(); });
+</script>
+</body>
+</html>
