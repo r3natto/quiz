@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuizBase — Histórico</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0e0e11; --surface:#18181d; --surface2:#222229; --border:#2e2e38;
+    --accent:#7c6ef7; --accent2:#a78bfa; --text:#f0f0f5; --muted:#8888a0;
+    --success:#34d399; --danger:#f87171; --warning:#fbbf24; --radius:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2rem;border-bottom:1px solid var(--border);}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.02em;}
+  .logo span{color:var(--accent2);}
+  .nav-links{display:flex;gap:8px;}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:0.875rem;padding:6px 14px;border-radius:8px;transition:all 0.2s;}
+  .nav-links a:hover,.nav-links a.active{background:var(--surface2);color:var(--text);}
+  .nav-links a.active{color:var(--accent2);}
+  .container{max-width:760px;margin:0 auto;padding:2.5rem 1.5rem;}
+  h1{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:700;margin-bottom:0.4rem;}
+  .subtitle{color:var(--muted);font-size:0.9rem;margin-bottom:2rem;}
+
+  /* CARDS TOTAIS */
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:2rem;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;}
+  .stat-label{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;}
+  .stat-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;}
+  .stat-val.green{color:var(--success);}
+  .stat-val.purple{color:var(--accent2);}
+  .stat-val.yellow{color:var(--warning);}
+
+  /* MATÉRIAS */
+  .section-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:600;color:var(--accent2);margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+  .section-title::before{content:'';display:inline-block;width:3px;height:1em;background:var(--accent2);border-radius:2px;}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;}
+
+  .materia-row{margin-bottom:1.2rem;}
+  .materia-row:last-child{margin-bottom:0;}
+  .mat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .mat-nome{font-size:0.9rem;font-weight:500;}
+  .mat-stats{font-size:0.8rem;color:var(--muted);}
+  .mat-pct{font-size:0.85rem;font-weight:600;color:var(--accent2);}
+  .bar-bg{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:4px;transition:width 0.6s ease;}
+
+  /* SESSÕES */
+  .sessao-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);}
+  .sessao-item:last-child{border-bottom:none;}
+  .sessao-data{font-size:0.8rem;color:var(--muted);}
+  .sessao-mat{font-size:0.875rem;margin-top:2px;}
+  .sessao-score{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;}
+  .score-high{color:var(--success);}
+  .score-mid{color:var(--warning);}
+  .score-low{color:var(--danger);}
+  .sessao-detail{font-size:0.75rem;color:var(--muted);text-align:right;}
+
+  .empty{text-align:center;padding:3rem;color:var(--muted);}
+  .loader{text-align:center;padding:2rem;color:var(--muted);}
+
+  .btn-clear{background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);padding:6px 14px;font-size:0.8rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+  .btn-clear:hover{border-color:var(--danger);color:var(--danger);}
+
+  @media(max-width:600px){
+    nav{padding:1rem;}
+    .nav-links a span{display:none;}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Quiz<span>Base</span></div>
+  <div class="nav-links">
+    <a href="cadastro.html">✏️ <span>Cadastro</span></a>
+    <a href="importar.html">📄 <span>Importar PDF</span></a>
+    <a href="quiz.html">🎯 <span>Quiz</span></a>
+    <a href="historico.html" class="active">📊 <span>Histórico</span></a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Histórico</h1>
+  <p class="subtitle">Seu desempenho acumulado por matéria</p>
+  <div id="conteudo"><div class="loader">Carregando...</div></div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, getDocs, deleteDoc, doc, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+let db;
+function getConfig(){ const c=localStorage.getItem('qb_config'); return c?JSON.parse(c):null; }
+
+async function init() {
+  const cfg=getConfig();
+  if(!cfg){ document.getElementById('conteudo').innerHTML='<div class="empty">Configure o Firebase na página de <a href="cadastro.html" style="color:var(--accent2)">Cadastro</a> primeiro.</div>'; return; }
+  try {
+    const app=initializeApp(cfg);
+    db=getFirestore(app);
+    await carregar();
+  } catch(e){ document.getElementById('conteudo').innerHTML='<div class="empty">Erro ao conectar.</div>'; }
+}
+
+async function carregar() {
+  const q=query(collection(db,'historico'),orderBy('data','desc'));
+  const snap=await getDocs(q);
+  const sessoes=snap.docs.map(d=>({id:d.id,...d.data()}));
+  renderTudo(sessoes);
+}
+
+function renderTudo(sessoes) {
+  const c=document.getElementById('conteudo');
+  if(!sessoes.length){ c.innerHTML='<div class="empty">Nenhuma sessão registrada ainda.<br><br><a href="quiz.html" style="color:var(--accent2)">Começar um quiz →</a></div>'; return; }
+
+  // Agregar por matéria
+  const porMateria={};
+  sessoes.forEach(s=>{
+    if(s.por_materia) {
+      Object.entries(s.por_materia).forEach(([mat,dados])=>{
+        if(!porMateria[mat]) porMateria[mat]={acertos:0,erros:0};
+        porMateria[mat].acertos+=dados.acertos||0;
+        porMateria[mat].erros+=dados.erros||0;
+      });
+    }
+  });
+
+  const totalSessoes=sessoes.length;
+  const totalRespondidas=sessoes.reduce((s,x)=>s+(x.total||0),0);
+  const totalAcertos=sessoes.reduce((s,x)=>s+(x.acertos||0),0);
+  const pctGeral=totalRespondidas>0?Math.round(totalAcertos/totalRespondidas*100):0;
+
+  c.innerHTML=`
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">Sessões</div><div class="stat-val purple">${totalSessoes}</div></div>
+      <div class="stat-card"><div class="stat-label">Respondidas</div><div class="stat-val purple">${totalRespondidas}</div></div>
+      <div class="stat-card"><div class="stat-label">Acertos</div><div class="stat-val green">${totalAcertos}</div></div>
+      <div class="stat-card"><div class="stat-label">Aproveitamento</div><div class="stat-val ${pctGeral>=70?'green':pctGeral>=50?'yellow':''}"> ${pctGeral}%</div></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Desempenho por matéria</div>
+      ${Object.entries(porMateria).sort((a,b)=>{
+        const pA=a[1].acertos/(a[1].acertos+a[1].erros);
+        const pB=b[1].acertos/(b[1].acertos+b[1].erros);
+        return pB-pA;
+      }).map(([mat,d])=>{
+        const tot=d.acertos+d.erros;
+        const pct=tot>0?Math.round(d.acertos/tot*100):0;
+        const cor=pct>=70?'#34d399':pct>=50?'#fbbf24':'#f87171';
+        return `<div class="materia-row">
+          <div class="mat-header">
+            <span class="mat-nome">${mat}</span>
+            <div style="text-align:right">
+              <div class="mat-pct" style="color:${cor}">${pct}%</div>
+              <div class="mat-stats">${d.acertos} acertos · ${d.erros} erros · ${tot} total</div>
+            </div>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${cor}"></div></div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+        <div class="section-title" style="margin-bottom:0">Últimas sessões</div>
+        <button class="btn-clear" onclick="limparHistorico()">🗑 Limpar tudo</button>
+      </div>
+      ${sessoes.slice(0,20).map(s=>{
+        const pct=s.total>0?Math.round(s.acertos/s.total*100):0;
+        const cls=pct>=70?'score-high':pct>=50?'score-mid':'score-low';
+        const data=new Date(s.data).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'});
+        return `<div class="sessao-item">
+          <div>
+            <div class="sessao-mat">${s.materia||'Todas'}</div>
+            <div class="sessao-data">${data}</div>
+          </div>
+          <div>
+            <div class="sessao-score ${cls}">${pct}%</div>
+            <div class="sessao-detail">${s.acertos}/${s.total}</div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
+window.limparHistorico = async function() {
+  if(!confirm('Limpar todo o histórico? Esta ação não pode ser desfeita.')) return;
+  const snap=await getDocs(collection(db,'historico'));
+  await Promise.all(snap.docs.map(d=>deleteDoc(doc(db,'historico',d.id))));
+  await carregar();
+}
+
+init();
+</script>
+</body>
+</html>
