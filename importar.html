@@ -13,7 +13,6 @@
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; }
-
   nav { display:flex; align-items:center; justify-content:space-between; padding:1.2rem 2rem; border-bottom:1px solid var(--border); }
   .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.3rem; letter-spacing:-0.02em; }
   .logo span { color:var(--accent2); }
@@ -21,30 +20,23 @@
   .nav-links a { text-decoration:none; color:var(--muted); font-size:0.875rem; padding:6px 14px; border-radius:8px; transition:all 0.2s; }
   .nav-links a:hover, .nav-links a.active { background:var(--surface2); color:var(--text); }
   .nav-links a.active { color:var(--accent2); }
-
   .container { max-width:820px; margin:0 auto; padding:2.5rem 1.5rem; }
   h1 { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:700; margin-bottom:0.4rem; }
   .subtitle { color:var(--muted); font-size:0.9rem; margin-bottom:2rem; }
-
   .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.8rem; margin-bottom:1.5rem; }
   .card-title { font-family:'Syne',sans-serif; font-size:1rem; font-weight:600; margin-bottom:1.2rem; color:var(--accent2); display:flex; align-items:center; gap:8px; }
   .card-title::before { content:''; display:inline-block; width:3px; height:1em; background:var(--accent2); border-radius:2px; }
-
   label { display:block; font-size:0.8rem; font-weight:500; color:var(--muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.06em; }
-  input[type=text], input[type=password], select, textarea {
+  input[type=text], input[type=password], select {
     width:100%; background:var(--surface2); border:1px solid var(--border);
     border-radius:8px; color:var(--text); font-family:'DM Sans',sans-serif;
     font-size:0.95rem; padding:10px 14px; outline:none; transition:border-color 0.2s;
   }
-  input[type=text]:focus, input[type=password]:focus, textarea:focus { border-color:var(--accent); }
+  input[type=text]:focus, input[type=password]:focus { border-color:var(--accent); }
   .field { margin-bottom:1.2rem; }
   .row2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
 
-  /* UPLOAD AREA */
-  .upload-area {
-    border:2px dashed var(--border); border-radius:var(--radius); padding:2.5rem;
-    text-align:center; cursor:pointer; transition:all 0.2s; position:relative;
-  }
+  .upload-area { border:2px dashed var(--border); border-radius:var(--radius); padding:2.5rem; text-align:center; cursor:pointer; transition:all 0.2s; position:relative; }
   .upload-area:hover, .upload-area.drag { border-color:var(--accent); background:rgba(124,110,247,0.05); }
   .upload-area.hasfile { border-color:var(--success); border-style:solid; background:rgba(52,211,153,0.05); }
   .upload-icon { font-size:2.5rem; margin-bottom:0.8rem; opacity:0.5; }
@@ -53,10 +45,6 @@
   .upload-area input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
   .file-name { font-size:0.875rem; color:var(--success); margin-top:0.5rem; font-weight:500; }
 
-  /* MATÉRIA */
-  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-
-  /* BOTÃO PRINCIPAL */
   .btn-primary { background:var(--accent); color:#fff; border:none; border-radius:8px; padding:12px 28px; font-family:'Syne',sans-serif; font-size:0.95rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
   .btn-primary:hover { background:var(--accent2); transform:translateY(-1px); }
   .btn-primary:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
@@ -68,14 +56,12 @@
   .btn-danger { background:transparent; border:1px solid var(--danger); border-radius:8px; padding:6px 14px; font-family:'DM Sans',sans-serif; font-size:0.8rem; color:var(--danger); cursor:pointer; transition:all 0.2s; }
   .btn-danger:hover { background:rgba(248,113,113,0.1); }
 
-  /* PROGRESS */
   .progress-box { display:none; }
   .progress-label { font-size:0.875rem; color:var(--muted); margin-bottom:8px; }
   .progress-bar { height:6px; background:var(--surface2); border-radius:3px; overflow:hidden; margin-bottom:6px; }
   .progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:3px; transition:width 0.4s ease; }
   .progress-status { font-size:0.8rem; color:var(--muted); }
 
-  /* REVISÃO */
   #tela-revisao { display:none; }
   .revisao-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; flex-wrap:wrap; gap:10px; }
   .revisao-count { font-size:0.875rem; color:var(--muted); }
@@ -98,27 +84,20 @@
   .q-aviso { font-size:0.78rem; color:var(--warning); }
   .q-ok-badge { font-size:0.78rem; color:var(--success); }
 
-  /* CE específico */
   .ce-alts { display:flex; gap:10px; margin-bottom:12px; }
   .ce-alt { flex:1; padding:10px; border:1px solid var(--border); border-radius:8px; background:var(--surface); text-align:center; font-size:0.9rem; cursor:pointer; transition:all 0.2s; color:var(--muted); }
   .ce-alt:hover { border-color:var(--accent); color:var(--text); }
   .ce-alt.gabarito-certo { border-color:var(--success); background:rgba(52,211,153,0.1); color:var(--success); font-weight:600; }
   .ce-alt.gabarito-errado { border-color:var(--danger); background:rgba(248,113,113,0.1); color:var(--danger); font-weight:600; }
 
-  /* TOAST */
-  .toast { position:fixed; bottom:2rem; right:2rem; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:0.875rem; transform:translateY(100px); opacity:0; transition:all 0.3s; z-index:999; max-width:300px; }
+  .toast { position:fixed; bottom:2rem; right:2rem; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:0.875rem; transform:translateY(100px); opacity:0; transition:all 0.3s; z-index:999; max-width:320px; }
   .toast.show { transform:translateY(0); opacity:1; }
   .toast.success { border-color:var(--success); color:var(--success); }
   .toast.error { border-color:var(--danger); color:var(--danger); }
   .toast.warning { border-color:var(--warning); color:var(--warning); }
 
-  /* API KEY */
-  .api-row { display:flex; gap:10px; align-items:flex-end; }
-  .api-row .field { flex:1; margin-bottom:0; }
   .api-status { font-size:0.78rem; margin-top:6px; }
   .api-status.ok { color:var(--success); }
-  .api-status.err { color:var(--danger); }
-
   .info-box { background:rgba(124,110,247,0.08); border:1px solid rgba(124,110,247,0.2); border-radius:10px; padding:1rem 1.2rem; font-size:0.85rem; color:var(--muted); margin-bottom:1.5rem; line-height:1.6; }
   .info-box strong { color:var(--accent2); }
 
@@ -126,7 +105,6 @@
     nav { padding:1rem; }
     .nav-links a span { display:none; }
     .row2 { grid-template-columns:1fr; }
-    .revisao-header { flex-direction:column; }
   }
 </style>
 </head>
@@ -145,18 +123,17 @@
   <h1>Importar PDF</h1>
   <p class="subtitle">A IA lê o PDF, extrai as questões e você revisa antes de salvar</p>
 
-  <!-- TELA UPLOAD -->
   <div id="tela-upload">
     <div class="info-box">
-      <strong>Como funciona:</strong> Envie um PDF com questões e gabarito. A IA identifica automaticamente os enunciados, alternativas, bancas e gabaritos. Você revisa tudo antes de salvar no banco de dados.
+      <strong>Como funciona:</strong> Envie um PDF completo com questões e gabarito. A IA faz duas leituras — uma para extrair as questões e outra para o gabarito — e cruza os dados automaticamente. Você revisa tudo antes de salvar.
     </div>
 
     <div class="card">
       <div class="card-title">Configuração da IA</div>
       <div class="field">
         <label>Chave API do Google Gemini</label>
-        <div class="api-row">
-          <div class="field">
+        <div style="display:flex;gap:10px;align-items:flex-end">
+          <div style="flex:1">
             <input type="password" id="gemini-key" placeholder="AIza..." oninput="salvarChave()">
           </div>
           <button class="btn-outline" onclick="toggleVerChave()">👁</button>
@@ -170,7 +147,6 @@
 
     <div class="card">
       <div class="card-title">PDF e configurações</div>
-
       <div class="field">
         <label>Arquivo PDF</label>
         <div class="upload-area" id="upload-area">
@@ -180,7 +156,6 @@
           <div class="file-name" id="file-name"></div>
         </div>
       </div>
-
       <div class="row2">
         <div class="field">
           <label>Matéria padrão</label>
@@ -196,7 +171,7 @@
       </div>
 
       <div class="progress-box" id="progress-box">
-        <div class="progress-label" id="progress-label">Processando PDF...</div>
+        <div class="progress-label" id="progress-label">Processando...</div>
         <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
         <div class="progress-status" id="progress-status"></div>
       </div>
@@ -207,7 +182,7 @@
     </div>
   </div>
 
-  <!-- TELA REVISÃO -->
+  <!-- REVISÃO -->
   <div id="tela-revisao">
     <div class="card">
       <div class="revisao-header">
@@ -220,9 +195,7 @@
           <button class="btn-success" id="btn-salvar-tudo" onclick="salvarTudo()">💾 Salvar todas no banco</button>
         </div>
       </div>
-
       <div id="lista-revisao"></div>
-
       <div style="display:flex;justify-content:flex-end;margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
         <button class="btn-success" id="btn-salvar-tudo2" onclick="salvarTudo()">💾 Salvar todas no banco</button>
       </div>
@@ -236,10 +209,7 @@
 import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getFirestore, collection, addDoc, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-let db = null;
-let questoesExtraidas = [];
-let pdfBase64 = null;
-let pdfFile = null;
+let db = null, questoesExtraidas = [], pdfBase64 = null;
 
 function getConfig() { const c = localStorage.getItem('qb_config'); return c ? JSON.parse(c) : null; }
 function getGeminiKey() { return localStorage.getItem('qb_gemini_key') || ''; }
@@ -254,7 +224,6 @@ async function initFirebase() {
   } catch(e) { return false; }
 }
 
-// Carregar chave salva
 window.addEventListener('DOMContentLoaded', async () => {
   const key = getGeminiKey();
   if (key) {
@@ -294,26 +263,20 @@ async function carregarMaterias() {
 window.selecionarPDF = function(e) {
   const file = e.target.files[0];
   if (!file) return;
-  pdfFile = file;
   document.getElementById('file-name').textContent = '📎 ' + file.name;
   document.getElementById('upload-area').classList.add('hasfile');
-
   const reader = new FileReader();
-  reader.onload = (ev) => {
-    pdfBase64 = ev.target.result.split(',')[1];
-  };
+  reader.onload = (ev) => { pdfBase64 = ev.target.result.split(',')[1]; };
   reader.readAsDataURL(file);
 }
 
-// Drag and drop
 const uploadArea = document.getElementById('upload-area');
 uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('drag'); });
 uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag'));
 uploadArea.addEventListener('drop', e => {
-  e.preventDefault();
-  uploadArea.classList.remove('drag');
+  e.preventDefault(); uploadArea.classList.remove('drag');
   const file = e.dataTransfer.files[0];
-  if (file && file.type === 'application/pdf') {
+  if (file?.type === 'application/pdf') {
     document.getElementById('pdf-input').files = e.dataTransfer.files;
     window.selecionarPDF({ target: { files: [file] } });
   }
@@ -325,108 +288,100 @@ function setProgress(pct, label, status) {
   if (status) document.getElementById('progress-status').textContent = status;
 }
 
+async function chamarGemini(key, promptTexto) {
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [
+          { inline_data: { mime_type: 'application/pdf', data: pdfBase64 } },
+          { text: promptTexto }
+        ]}],
+        generationConfig: { temperature: 0.1, maxOutputTokens: 65536 }
+      })
+    }
+  );
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.error?.message || 'Erro na API Gemini');
+  }
+  const data = await response.json();
+  const texto = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  return texto.replace(/```json\n?/g,'').replace(/```\n?/g,'').trim();
+}
+
 window.processarPDF = async function() {
   const key = getGeminiKey();
   if (!key) { toast('Configure a chave da API Gemini primeiro', 'error'); return; }
   if (!pdfBase64) { toast('Selecione um PDF primeiro', 'error'); return; }
   const materia = document.getElementById('materia-padrao').value.trim();
   if (!materia) { toast('Digite a matéria padrão', 'error'); return; }
+  const secao = document.getElementById('secao').value.trim();
 
   const btn = document.getElementById('btn-processar');
   btn.disabled = true;
   document.getElementById('progress-box').style.display = 'block';
-  setProgress(10, 'Enviando PDF para a IA...', 'Aguarde, isso pode levar alguns segundos');
-
-  const secao = document.getElementById('secao').value.trim();
-
-  const prompt = `Você é um extrator especializado de questões de concursos públicos brasileiros.
-
-Analise este PDF e extraia TODAS as questões encontradas.
-
-Para cada questão, identifique:
-1. Número da questão
-2. Banca e ano (ex: "Cebraspe/TRT-10 – 2025") — se houver
-3. Enunciado completo (preserve quebras de linha e formatação original)
-4. Tipo: "certo_errado" (se tiver apenas Certo/Errado) ou "multipla" (se tiver alternativas A, B, C, D, E)
-5. Alternativas (para múltipla escolha: lista com os textos de cada alternativa)
-6. Gabarito: para certo_errado use "Certo" ou "Errado"; para múltipla use a letra correta (A, B, C, D ou E)
-   - O gabarito geralmente está em uma seção separada no final do PDF, com formato como "1-C", "2-Certo", etc.
-   - Se não encontrar o gabarito de uma questão, use null
-
-A matéria padrão é: "${materia}"
-${secao ? `A seção/assunto é: "${secao}"` : ''}
-
-IMPORTANTE:
-- Preserve quebras de linha no enunciado usando \\n
-- Para questões com itens numerados (I, II, III) ou letras no enunciado, preserve exatamente
-- Ignore textos de rodapé, cabeçalhos, nomes de professores, URLs e numeração de páginas
-- O gabarito pode estar no formato: "1. Certo", "1-E", "Gabarito: C", etc.
-
-Responda APENAS com um JSON válido, sem markdown, sem explicações, exatamente neste formato:
-{
-  "questoes": [
-    {
-      "numero": 1,
-      "banca": "Cebraspe/TRT-10 – 2025",
-      "materia": "${materia}",
-      "enunciado": "texto completo da questão",
-      "tipo": "certo_errado",
-      "alternativas": ["Certo", "Errado"],
-      "gabarito_letra": "Errado"
-    },
-    {
-      "numero": 12,
-      "banca": "CEBRASPE/TJ-CE – 2018",
-      "materia": "${materia}",
-      "enunciado": "texto completo",
-      "tipo": "multipla",
-      "alternativas": ["texto A", "texto B", "texto C", "texto D", "texto E"],
-      "gabarito_letra": "E"
-    }
-  ]
-}`;
 
   try {
-    setProgress(30, 'IA analisando o PDF...', 'Identificando questões, alternativas e gabaritos');
+    // PASSAGEM 1 — extrair questões
+    setProgress(15, 'Extraindo questões...', 'Passagem 1 de 2 — identificando enunciados e alternativas');
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{
-            parts: [
-              { inline_data: { mime_type: 'application/pdf', data: pdfBase64 } },
-              { text: prompt }
-            ]
-          }],
-          generationConfig: { temperature: 0.1, maxOutputTokens: 8192 }
-        })
+    const json1 = await chamarGemini(key, `Você é um extrator de questões de concursos públicos brasileiros.
+
+Extraia TODAS as questões do PDF. Para cada uma identifique:
+1. Número
+2. Banca e ano (ex: "Cebraspe/TRT-10 – 2025")
+3. Enunciado completo (preserve quebras de linha com \\n, inclua itens I II III se houver)
+4. Tipo: "certo_errado" ou "multipla"
+5. Alternativas: ["Certo","Errado"] para certo_errado; lista de textos para múltipla
+
+Matéria: "${materia}"${secao ? `\nSeção: "${secao}"` : ''}
+
+Ignore: rodapés, cabeçalhos, nomes de professores, URLs, numeração de páginas, gabaritos.
+
+Responda APENAS com JSON válido sem markdown:
+{"questoes":[{"numero":1,"banca":"...","materia":"${materia}","enunciado":"...","tipo":"certo_errado","alternativas":["Certo","Errado"]},{"numero":2,"banca":"...","materia":"${materia}","enunciado":"...","tipo":"multipla","alternativas":["texto a","texto b","texto c","texto d","texto e"]}]}`);
+
+    const resultado1 = JSON.parse(json1);
+    if (!resultado1.questoes?.length) throw new Error('Nenhuma questão encontrada no PDF');
+
+    setProgress(55, 'Extraindo gabaritos...', 'Passagem 2 de 2 — lendo página de gabaritos');
+
+    // PASSAGEM 2 — extrair gabarito
+    const json2 = await chamarGemini(key, `Analise este PDF e extraia APENAS os gabaritos da seção de gabaritos no final.
+
+Para Certo/Errado: use "Certo" ou "Errado" (CORRETA=Certo, ERRADA=Errado).
+Para múltipla escolha: use a letra maiúscula (A, B, C, D ou E).
+
+Inclua TODOS os números que tiverem gabarito.
+
+Responda APENAS com JSON válido sem markdown:
+{"gabaritos":{"1":"Errado","2":"Certo","12":"E","13":"B"}}`);
+
+    let gabaritos = {};
+    try { gabaritos = JSON.parse(json2).gabaritos || {}; } catch(e) {}
+
+    setProgress(85, 'Cruzando dados...', 'Combinando questões com gabaritos');
+
+    // Cruzar
+    const questoes = resultado1.questoes.map(q => {
+      let gab = gabaritos[String(q.numero)] || gabaritos[q.numero] || null;
+      if (gab) {
+        const g = gab.toString().trim().toUpperCase();
+        if (['CORRETA','CERTO'].includes(g)) gab = 'Certo';
+        else if (['ERRADA','ERRADO'].includes(g)) gab = 'Errado';
+        else if (g === 'C' && q.tipo === 'certo_errado') gab = 'Certo';
+        else if (g === 'E' && q.tipo === 'certo_errado') gab = 'Errado';
+        else if (['A','B','C','D','E'].includes(g)) gab = g;
+        else gab = null;
       }
-    );
+      return { ...q, gabarito_letra: gab };
+    });
 
-    setProgress(70, 'Processando resultado...', 'Quase lá!');
-
-    if (!response.ok) {
-      const err = await response.json();
-      throw new Error(err.error?.message || 'Erro na API Gemini');
-    }
-
-    const data = await response.json();
-    const texto = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-    // Limpar possível markdown
-    const jsonLimpo = texto.replace(/```json\n?/g,'').replace(/```\n?/g,'').trim();
-    const resultado = JSON.parse(jsonLimpo);
-
-    if (!resultado.questoes || !resultado.questoes.length) {
-      throw new Error('Nenhuma questão encontrada no PDF');
-    }
-
-    setProgress(100, 'Concluído!', `${resultado.questoes.length} questões identificadas`);
-    questoesExtraidas = resultado.questoes;
-
+    setProgress(100, 'Concluído!', `${questoes.length} questões identificadas`);
+    questoesExtraidas = questoes;
     setTimeout(() => mostrarRevisao(), 600);
 
   } catch(e) {
@@ -440,15 +395,12 @@ Responda APENAS com um JSON válido, sem markdown, sem explicações, exatamente
 function mostrarRevisao() {
   document.getElementById('tela-upload').style.display = 'none';
   document.getElementById('tela-revisao').style.display = 'block';
-
   const semGabarito = questoesExtraidas.filter(q => !q.gabarito_letra).length;
   const comGabarito = questoesExtraidas.length - semGabarito;
-
   document.getElementById('revisao-count').innerHTML =
     `<strong>${questoesExtraidas.length} questões</strong> extraídas — ` +
     `<span style="color:var(--success)">${comGabarito} com gabarito</span>` +
     (semGabarito ? ` · <span style="color:var(--warning)">${semGabarito} sem gabarito (marque manualmente)</span>` : '');
-
   renderRevisao();
 }
 
@@ -456,30 +408,24 @@ function renderRevisao() {
   const c = document.getElementById('lista-revisao');
   c.innerHTML = '';
   const letras = ['A','B','C','D','E'];
-
   questoesExtraidas.forEach((q, idx) => {
     const div = document.createElement('div');
-    const temGabarito = q.gabarito_letra !== null && q.gabarito_letra !== undefined;
-    div.className = 'q-card ' + (temGabarito ? 'ok' : 'sem-gabarito');
-    div.id = `qrev-${idx}`;
+    const temGab = q.gabarito_letra !== null && q.gabarito_letra !== undefined;
+    div.className = 'q-card ' + (temGab ? 'ok' : 'sem-gabarito');
 
     let altsHtml = '';
     if (q.tipo === 'certo_errado') {
-      const gabCerto = q.gabarito_letra === 'Certo';
-      const gabErrado = q.gabarito_letra === 'Errado';
+      const gc = q.gabarito_letra === 'Certo', ge = q.gabarito_letra === 'Errado';
       altsHtml = `<div class="ce-alts">
-        <div class="ce-alt ${gabCerto ? 'gabarito-certo' : ''}" onclick="setGabCE(${idx},'Certo')">✓ Certo</div>
-        <div class="ce-alt ${gabErrado ? 'gabarito-errado' : ''}" onclick="setGabCE(${idx},'Errado')">✗ Errado</div>
+        <div class="ce-alt ${gc?'gabarito-certo':''}" onclick="setGabCE(${idx},'Certo')">✓ Certo</div>
+        <div class="ce-alt ${ge?'gabarito-errado':''}" onclick="setGabCE(${idx},'Errado')">✗ Errado</div>
       </div>`;
     } else {
       const alts = q.alternativas || [];
-      const gabIdx = q.gabarito_letra ? letras.indexOf(q.gabarito_letra.toUpperCase()) : -1;
+      const gi = q.gabarito_letra ? letras.indexOf(q.gabarito_letra.toUpperCase()) : -1;
       altsHtml = `<div class="q-alts">` +
-        alts.map((a, i) => `
-          <div class="q-alt ${i === gabIdx ? 'gabarito' : ''}" onclick="setGabMultipla(${idx},${i})">
-            <span class="q-alt-letra">${letras[i]}</span>
-            <span>${a}</span>
-          </div>`).join('') +
+        alts.map((a,i) => `<div class="q-alt ${i===gi?'gabarito':''}" onclick="setGabMultipla(${idx},${i})">
+          <span class="q-alt-letra">${letras[i]}</span><span>${a}</span></div>`).join('') +
         `</div>`;
     }
 
@@ -487,111 +433,71 @@ function renderRevisao() {
       <div class="q-card-header">
         <span class="q-num">Questão ${q.numero}</span>
         <div style="display:flex;gap:8px;align-items:center">
-          ${q.banca ? `<span class="q-banca-tag">${q.banca}</span>` : ''}
+          ${q.banca?`<span class="q-banca-tag">${q.banca}</span>`:''}
           <button class="btn-danger" onclick="removerQuestao(${idx})">Remover</button>
         </div>
       </div>
       <div class="q-enunciado-rev">${q.enunciado}</div>
       ${altsHtml}
       <div class="q-footer">
-        <div>
-          <span class="tag" style="background:rgba(124,110,247,0.15);color:var(--accent2);border:1px solid rgba(124,110,247,0.3);font-size:0.72rem;padding:2px 10px;border-radius:20px">${q.materia}</span>
-        </div>
-        ${!temGabarito
-          ? `<span class="q-aviso">⚠️ Marque o gabarito acima</span>`
-          : `<span class="q-ok-badge">✓ Gabarito marcado</span>`}
+        <span class="tag" style="background:rgba(124,110,247,0.15);color:var(--accent2);border:1px solid rgba(124,110,247,0.3);font-size:0.72rem;padding:2px 10px;border-radius:20px">${q.materia}</span>
+        ${!temGab ? `<span class="q-aviso">⚠️ Marque o gabarito acima</span>` : `<span class="q-ok-badge">✓ Gabarito marcado</span>`}
       </div>`;
     c.appendChild(div);
   });
 }
 
-window.setGabCE = function(idx, valor) {
-  questoesExtraidas[idx].gabarito_letra = valor;
-  renderRevisao();
-  atualizarContador();
-}
-
-window.setGabMultipla = function(idx, altIdx) {
-  const letras = ['A','B','C','D','E'];
-  questoesExtraidas[idx].gabarito_letra = letras[altIdx];
-  renderRevisao();
-  atualizarContador();
-}
-
-window.removerQuestao = function(idx) {
-  questoesExtraidas.splice(idx, 1);
-  renderRevisao();
-  atualizarContador();
-}
+window.setGabCE = function(idx, v) { questoesExtraidas[idx].gabarito_letra = v; renderRevisao(); atualizarContador(); }
+window.setGabMultipla = function(idx, i) { questoesExtraidas[idx].gabarito_letra = ['A','B','C','D','E'][i]; renderRevisao(); atualizarContador(); }
+window.removerQuestao = function(idx) { questoesExtraidas.splice(idx,1); renderRevisao(); atualizarContador(); }
 
 function atualizarContador() {
-  const semGabarito = questoesExtraidas.filter(q => !q.gabarito_letra).length;
-  const comGabarito = questoesExtraidas.length - semGabarito;
+  const sem = questoesExtraidas.filter(q => !q.gabarito_letra).length;
   document.getElementById('revisao-count').innerHTML =
     `<strong>${questoesExtraidas.length} questões</strong> — ` +
-    `<span style="color:var(--success)">${comGabarito} com gabarito</span>` +
-    (semGabarito ? ` · <span style="color:var(--warning)">${semGabarito} sem gabarito</span>` : '');
+    `<span style="color:var(--success)">${questoesExtraidas.length-sem} com gabarito</span>` +
+    (sem ? ` · <span style="color:var(--warning)">${sem} sem gabarito</span>` : '');
 }
 
 window.salvarTudo = async function() {
   if (!db) { toast('Firebase não conectado. Configure na página de Cadastro.', 'error'); return; }
-
-  const semGabarito = questoesExtraidas.filter(q => !q.gabarito_letra);
-  if (semGabarito.length > 0) {
-    const ok = confirm(`${semGabarito.length} questão(ões) ainda sem gabarito. Deseja salvar assim mesmo?`);
-    if (!ok) return;
-  }
+  const sem = questoesExtraidas.filter(q => !q.gabarito_letra).length;
+  if (sem > 0 && !confirm(`${sem} questão(ões) sem gabarito. Salvar assim mesmo?`)) return;
 
   const btns = document.querySelectorAll('#btn-salvar-tudo, #btn-salvar-tudo2');
-  btns.forEach(b => { b.disabled = true; b.textContent = 'Salvando...'; });
+  btns.forEach(b => { b.disabled=true; b.textContent='Salvando...'; });
 
   const letras = ['A','B','C','D','E'];
   let salvos = 0, erros = 0;
-
   for (const q of questoesExtraidas) {
     try {
-      let gabarito = 0;
-      if (q.tipo === 'certo_errado') {
-        gabarito = q.gabarito_letra === 'Certo' ? 0 : 1;
-      } else {
-        gabarito = q.gabarito_letra ? letras.indexOf(q.gabarito_letra.toUpperCase()) : 0;
-        if (gabarito < 0) gabarito = 0;
-      }
-
-      await addDoc(collection(db, 'questoes'), {
-        enunciado: q.enunciado,
-        materia: q.materia,
-        banca: q.banca || '',
-        tipo: q.tipo,
-        alternativas: q.alternativas,
-        gabarito,
-        criadoEm: Date.now()
+      let gab = 0;
+      if (q.tipo === 'certo_errado') gab = q.gabarito_letra === 'Certo' ? 0 : 1;
+      else { gab = q.gabarito_letra ? letras.indexOf(q.gabarito_letra.toUpperCase()) : 0; if(gab<0)gab=0; }
+      await addDoc(collection(db,'questoes'), {
+        enunciado: q.enunciado, materia: q.materia, banca: q.banca||'',
+        tipo: q.tipo, alternativas: q.alternativas, gabarito: gab, criadoEm: Date.now()
       });
       salvos++;
     } catch(e) { erros++; }
   }
 
-  if (erros === 0) {
-    toast(`${salvos} questões salvas com sucesso!`, 'success');
-    setTimeout(() => { window.location.href = 'cadastro.html'; }, 1500);
-  } else {
-    toast(`${salvos} salvas, ${erros} com erro`, 'warning');
-    btns.forEach(b => { b.disabled = false; b.textContent = '💾 Salvar todas no banco'; });
-  }
+  if (erros===0) { toast(`${salvos} questões salvas!`, 'success'); setTimeout(()=>{ window.location.href='cadastro.html'; },1500); }
+  else { toast(`${salvos} salvas, ${erros} com erro`, 'warning'); btns.forEach(b=>{ b.disabled=false; b.textContent='💾 Salvar todas no banco'; }); }
 }
 
 window.voltarUpload = function() {
-  document.getElementById('tela-revisao').style.display = 'none';
-  document.getElementById('tela-upload').style.display = 'block';
-  document.getElementById('progress-box').style.display = 'none';
-  document.getElementById('btn-processar').disabled = false;
-  questoesExtraidas = [];
+  document.getElementById('tela-revisao').style.display='none';
+  document.getElementById('tela-upload').style.display='block';
+  document.getElementById('progress-box').style.display='none';
+  document.getElementById('btn-processar').disabled=false;
+  questoesExtraidas=[];
 }
 
 function toast(msg, type='success') {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast ' + type + ' show';
-  setTimeout(() => t.classList.remove('show'), 3000);
+  t.textContent=msg; t.className='toast '+type+' show';
+  setTimeout(()=>t.classList.remove('show'),3000);
 }
 </script>
 </body>
